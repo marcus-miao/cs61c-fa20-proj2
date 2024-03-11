@@ -15,20 +15,25 @@
 #   this function terminates the program with error code 77.
 # =================================================================
 argmax:
+    ble a1, x0, invalid_array_length_exception
 
-    # Prologue
+    addi t0, x0, 1 # init t0 with 1 as loop index
+    mv t1, a0      # store the start of the array
+    lw t2, 0(t1)   # init largest value as the first element of the array
+loop:
+    bge t0, a1, done
 
+    slli t3, t0, 2 # convert array index to byte offset
+    add t3, t1, t3 # store address of current array element to t3
+    lw t3, 0(t3)   # load current array element to t3
 
-loop_start:
-
-
-loop_continue:
-
-
-loop_end:
-    
-
-    # Epilogue
-
-
+    ble t3, t2, loop_next_iter
+    mv a0, t0 # stores the new index of the largest element
+    mv t2, t3 # stores the new largest element
+loop_next_iter:
+    addi t0, t0, 1
+    j loop
+invalid_array_length_exception:
+    li a0, 77
+done:
     ret
