@@ -49,6 +49,37 @@ class TestRelu(TestCase):
         t.check_array(array0, [1, 0, 3, 0, 5, 0, 7, 0, 9])
         # generate the `assembly/TestRelu_test_simple.s` file and run it through venus
         t.execute()
+    
+    def test_zero_length(self):
+        t = AssemblyTest(self, "relu.s")
+        
+        # create an array with zero length
+        array = t.array([])
+        t.input_array("a0", array)
+        t.input_scalar("a1", len(array))
+
+        # check relu function raise exception with error code 78
+        t.call("relu")
+        t.check_scalar("a0", 78)
+        
+        t.execute()
+        
+    
+    def test_negative_length(self):
+        t = AssemblyTest(self, "relu.s")
+        
+        # create an array with zero length
+        array = t.array([])
+        t.input_array("a0", array)
+        
+        # pass array length with an negative value
+        t.input_scalar("a1", -1)
+
+        # check relu function raise exception with error code 78
+        t.call("relu")
+        t.check_scalar("a0", 78)
+        
+        t.execute()
 
     @classmethod
     def tearDownClass(cls):
