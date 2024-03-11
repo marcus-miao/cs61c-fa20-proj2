@@ -90,17 +90,48 @@ class TestArgmax(TestCase):
     def test_simple(self):
         t = AssemblyTest(self, "argmax.s")
         # create an array in the data section
-        raise NotImplementedError("TODO")
-        # TODO
+        data = [1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 9, -11]
+        array = t.array(data)
         # load address of the array into register a0
-        # TODO
+        t.input_array("a0", array)
         # set a1 to the length of the array
-        # TODO
+        t.input_scalar("a1", len(array))
         # call the `argmax` function
-        # TODO
+        t.call("argmax")
         # check that the register a0 contains the correct output
-        # TODO
+        t.check_scalar("a0", data.index(max(data)))
         # generate the `assembly/TestArgmax_test_simple.s` file and run it through venus
+        t.execute()
+    
+    def test_zero_length(self):
+        t = AssemblyTest(self, "argmax.s")
+        
+        # create an array with zero length
+        array = t.array([])
+        t.input_array("a0", array)
+        t.input_scalar("a1", len(array))
+
+        # check relu function raise exception with error code 77
+        t.call("argmax")
+        t.check_scalar("a0", 77)
+        
+        t.execute()
+        
+    
+    def test_negative_length(self):
+        t = AssemblyTest(self, "argmax.s")
+        
+        # create an array with zero length
+        array = t.array([])
+        t.input_array("a0", array)
+        
+        # pass array length with an negative value
+        t.input_scalar("a1", -1)
+
+        # check relu function raise exception with error code 78
+        t.call("argmax")
+        t.check_scalar("a0", 77)
+        
         t.execute()
 
     @classmethod
