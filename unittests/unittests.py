@@ -141,16 +141,92 @@ class TestDot(TestCase):
     def test_simple(self):
         t = AssemblyTest(self, "dot.s")
         # create arrays in the data section
-        raise NotImplementedError("TODO")
-        # TODO
+        data0 = [1, 2, 3, 4, 5]
+        data1 = [5, 4, 3, 2, 1]
+        assert(len(data0) == len(data1))
+        array0 = t.array(data0)
+        array1 = t.array(data1)
+
         # load array addresses into argument registers
-        # TODO
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+
         # load array attributes into argument registers
-        # TODO
+        t.input_scalar("a2", len(data0))
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 1)
+    
         # call the `dot` function
         t.call("dot")
+
         # check the return value
-        # TODO
+        t.check_scalar("a0", sum(x * y for x, y in zip(data0, data1)))
+        t.execute()
+    
+    def test_invalid_array_length(self):
+        t = AssemblyTest(self, "dot.s")
+
+        data0 = []
+        data1 = []
+        assert(len(data0) == len(data1))
+        array0 = t.array(data0)
+        array1 = t.array(data1)
+
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+
+        t.input_scalar("a2", len(data0))
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 1)
+    
+        t.call("dot")
+
+        # check the return value
+        t.check_scalar("a0", 75)
+        t.execute()
+    
+    def test_invalid_stride_1(self):
+        t = AssemblyTest(self, "dot.s")
+
+        data0 = [1]
+        data1 = [1]
+        assert(len(data0) == len(data1))
+        array0 = t.array(data0)
+        array1 = t.array(data1)
+
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+
+        t.input_scalar("a2", len(data0))
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 0)
+    
+        t.call("dot")
+
+        # check the return value
+        t.check_scalar("a0", 76)
+        t.execute()
+    
+    def test_invalid_stride_2(self):
+        t = AssemblyTest(self, "dot.s")
+
+        data0 = [1]
+        data1 = [1]
+        assert(len(data0) == len(data1))
+        array0 = t.array(data0)
+        array1 = t.array(data1)
+
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+
+        t.input_scalar("a2", len(data0))
+        t.input_scalar("a3", 0)
+        t.input_scalar("a4", 1)
+    
+        t.call("dot")
+
+        # check the return value
+        t.check_scalar("a0", 76)
         t.execute()
 
     @classmethod
