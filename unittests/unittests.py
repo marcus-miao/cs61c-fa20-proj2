@@ -64,7 +64,6 @@ class TestRelu(TestCase):
         
         t.execute()
         
-    
     def test_negative_length(self):
         t = AssemblyTest(self, "relu.s")
         
@@ -116,7 +115,6 @@ class TestArgmax(TestCase):
         t.check_scalar("a0", 77)
         
         t.execute()
-        
     
     def test_negative_length(self):
         t = AssemblyTest(self, "argmax.s")
