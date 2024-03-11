@@ -163,6 +163,30 @@ class TestDot(TestCase):
         t.check_scalar("a0", sum(x * y for x, y in zip(data0, data1)))
         t.execute()
     
+    def test_stride(self):
+        t = AssemblyTest(self, "dot.s")
+        data0 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        data1 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        assert(len(data0) == len(data1))
+        array0 = t.array(data0)
+        array1 = t.array(data1)
+
+        # load array addresses into argument registers
+        t.input_array("a0", array0)
+        t.input_array("a1", array1)
+
+        # load array attributes into argument registers
+        t.input_scalar("a2", 3)
+        t.input_scalar("a3", 1)
+        t.input_scalar("a4", 2)
+    
+        # call the `dot` function
+        t.call("dot")
+
+        # check the return value
+        t.check_scalar("a0", 22)
+        t.execute()   
+    
     def test_invalid_array_length(self):
         t = AssemblyTest(self, "dot.s")
 
