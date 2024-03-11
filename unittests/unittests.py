@@ -60,9 +60,8 @@ class TestRelu(TestCase):
 
         # check relu function raise exception with error code 78
         t.call("relu")
-        t.check_scalar("a0", 78)
         
-        t.execute()
+        t.execute(code=78)
         
     def test_negative_length(self):
         t = AssemblyTest(self, "relu.s")
@@ -76,9 +75,7 @@ class TestRelu(TestCase):
 
         # check relu function raise exception with error code 78
         t.call("relu")
-        t.check_scalar("a0", 78)
-        
-        t.execute()
+        t.execute(code=78)
 
     @classmethod
     def tearDownClass(cls):
@@ -112,9 +109,8 @@ class TestArgmax(TestCase):
 
         # check relu function raise exception with error code 77
         t.call("argmax")
-        t.check_scalar("a0", 77)
         
-        t.execute()
+        t.execute(code=77)
     
     def test_negative_length(self):
         t = AssemblyTest(self, "argmax.s")
@@ -128,9 +124,7 @@ class TestArgmax(TestCase):
 
         # check relu function raise exception with error code 78
         t.call("argmax")
-        t.check_scalar("a0", 77)
-        
-        t.execute()
+        t.execute(code=77)
 
     @classmethod
     def tearDownClass(cls):
@@ -206,8 +200,7 @@ class TestDot(TestCase):
         t.call("dot")
 
         # check the return value
-        t.check_scalar("a0", 75)
-        t.execute()
+        t.execute(code=75)
     
     def test_invalid_stride_1(self):
         t = AssemblyTest(self, "dot.s")
@@ -228,8 +221,7 @@ class TestDot(TestCase):
         t.call("dot")
 
         # check the return value
-        t.check_scalar("a0", 76)
-        t.execute()
+        t.execute(code=76)
     
     def test_invalid_stride_2(self):
         t = AssemblyTest(self, "dot.s")
@@ -250,8 +242,7 @@ class TestDot(TestCase):
         t.call("dot")
 
         # check the return value
-        t.check_scalar("a0", 76)
-        t.execute()
+        t.execute(code=76)
 
     @classmethod
     def tearDownClass(cls):

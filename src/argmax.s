@@ -34,6 +34,7 @@ loop_next_iter:
     addi t0, t0, 1
     j loop
 invalid_array_length_exception:
-    li a0, 77
+    li a1, 77
+    j exit2
 done:
     ret

@@ -24,40 +24,4 @@
 #     this function terminates the program with exit code 74.
 # =======================================================
 matmul:
-
-    # Error checks
-
-
-    # Prologue
-
-
-outer_loop_start:
-
-
-
-
-inner_loop_start:
-
-
-
-
-
-
-
-
-
-
-
-
-inner_loop_end:
-
-
-
-
-outer_loop_end:
-
-
-    # Epilogue
-    
-    
     ret

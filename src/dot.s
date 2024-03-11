@@ -44,10 +44,10 @@ loop:
     addi t1, t1, 1
     j loop
 invalid_vector_len:
-    li a0, 75
-    ret
+    li a1, 75
+    j exit2
 invalid_stride: 
-    li a0, 76
-    ret
+    li a1, 76
+    j exit2
 done:
     ret
