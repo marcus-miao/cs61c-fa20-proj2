@@ -31,7 +31,7 @@ matmul:
     ble a4, x0, m1_dimension_error
     ble a5, x0, m1_dimension_error
 
-    bne a1, a4, dimension_mismatch
+    bne a2, a4, dimension_mismatch
 
     # store arguments to s-registers here to reduce memory operations 
     # before and after dot call in following loop
