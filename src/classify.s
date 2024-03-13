@@ -193,6 +193,10 @@ print_classification:
 done:
     mv a0, s0
 
+    # free final matrix
+    mv a0, s5
+    jal free
+
     # epilogue
     lw s0, 0(sp) 
     lw s1, 4(sp)
